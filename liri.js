@@ -22,10 +22,14 @@ var searchTerm = process.argv[3];
 
 function concert() {
 
+    console.log(searchTerm)
+
     // AJAX CalL
     axios
         .get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp")
         .then(function (response) {
+
+            // console.log(response);
 
             // Venue Name
             console.log("Venue Name: " + response.data[0].venue.name);
@@ -159,8 +163,17 @@ function doWhatSay() {
         refinedData = data[2].split(",")
 
         // Search Term
-        searchTerm = refinedData[1];
+        secondStageTerm = refinedData[1];
 
+        //Make a number which will be the second to last character
+        var secondLastNumber = secondStageTerm.length -1;
+        // var secondLastNumber = secondLastNumber -1
+
+        console.log(secondLastNumber);
+
+        // Get the quotes off search term
+        searchTerm = secondStageTerm.slice(1, secondLastNumber);
+        
         console.log(operandum + searchTerm);
 
         // Switchboard Within DoWhatSay

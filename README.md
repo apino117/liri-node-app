@@ -15,7 +15,7 @@ To start you can tell "T.I.M.O.T.H.Y" to do one of four commands:
 1. **omdb** - This will search a movie by title and give you some info on it. *Example: omdb Goonies*
 1. **dowhatsay** - This will take whatever is written in the *random.txt* file and use it to execute one of the previous three commands. *Example: spotify-this-song,"lithium"*
 
->**Please Note:** Commands *must* be executed in a format mirroring their respective examples in order to function properly.
+>**Please Note:** Commands *must* be executed in a format mirroring their respective examples in order to function properly. The commands in particular are case sensitive.
 
 If you need any assistance or have any questions hopefully there's a concert, song or movie that might be able to help you out.
 
