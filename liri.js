@@ -35,6 +35,12 @@ spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, funct
     // External Link
     console.log(JSON.stringify(data.tracks.items[0].album.external_urls.spotify, null, 2));
 
+    // Song Name
+    console.log(JSON.stringify(data.tracks.items[0].name, null, 2));
+
+    // Album Name
+    console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
+
 
 
 });
