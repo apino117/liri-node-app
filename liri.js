@@ -165,14 +165,8 @@ function doWhatSay() {
         // Search Term
         secondStageTerm = refinedData[1];
 
-        //Make a number which will be the second to last character
-        var secondLastNumber = secondStageTerm.length -1;
-        // var secondLastNumber = secondLastNumber -1
-
-        console.log(secondLastNumber);
-
         // Get the quotes off search term
-        searchTerm = secondStageTerm.slice(1, secondLastNumber);
+        searchTerm = secondStageTerm.slice(1, -1);
         
         console.log(operandum + searchTerm);
 
