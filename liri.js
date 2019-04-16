@@ -16,27 +16,26 @@ var spotify = new Spotify(keys.spotify);
 
 var operandum = process.argv[2];
 
+var searchTerm = process.argv[3];
+
 // ------------------------------------------------------------- CONCERT THIS ---------------------------------------------------------------//
 
 function concert() {
-
-    // Scope variable in function so it doesnt fire other functions(?)
-    var searchTerm = process.argv[3];
-
+    
     // AJAX CalL
     axios
         .get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp")
         .then(function (response) {
 
             // Venue Name
-            console.log(response.data[0].venue.name);
+            console.log("Venue Name: " + response.data[0].venue.name);
 
             // Venue City, Country
-            console.log(response.data[0].venue.city + ", " + response.data[0].venue.country);
+            console.log("Location: " + response.data[0].venue.city + ", " + response.data[0].venue.country);
 
             // Date of concert
             var rawDate = response.data[0].datetime;
-            console.log(moment(rawDate).format("dddd, MMMM Do YYYY, h:mm:ss a"));
+            console.log("Date: " + moment(rawDate).format("dddd, MMMM Do YYYY, h:mm:ss a"));
 
         })
         .catch(function (error) {
@@ -62,8 +61,6 @@ function concert() {
 
 function spotifyThis() {
 
-    var searchTerm = process.argv[3];
-
     // Search Method
     spotify.search({ type: 'track', query: searchTerm, limit: 1 }, function (err, data) {
         if (err) {
@@ -71,16 +68,16 @@ function spotifyThis() {
         }
 
         // Song Name
-        console.log(JSON.stringify(data.tracks.items[0].name, null, 2));
+        console.log("Song: " + JSON.stringify(data.tracks.items[0].name, null, 2));
 
         // Artist Name
-        console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
+        console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
 
         // Album Name
-        console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
+        console.log("Album: " + JSON.stringify(data.tracks.items[0].album.name, null, 2));
 
         // // External Link
-        console.log(JSON.stringify(data.tracks.items[0].external_urls.spotify, null, 2));
+        console.log("Link: " + JSON.stringify(data.tracks.items[0].external_urls.spotify, null, 2));
 
     });
 
@@ -89,11 +86,6 @@ function spotifyThis() {
 // ------------------------------------------------------------- OMDB -----------------------------------------------------------------//
 
 function movieThis() {
-
-    // Scoping the variable
-
-    // If it's one word
-    var searchTerm = process.argv[3];
 
     // // If it's two words...not sure the exact best way to handle, some sort of user validation based off the number of spaces or the argvs?
     // var searchTerm = process.argv[3] + "+" + process.argv[4];
@@ -104,28 +96,28 @@ function movieThis() {
         .then(function (response) {
 
             // Title
-            console.log(response.data.Title);
+            console.log("Title: " + response.data.Title);
 
             // Year the movie came out
-            console.log(response.data.Released);
+            console.log("Release Date: " + response.data.Released);
 
             // IMDB Rating of the movie.
-            console.log("IMDB Ratings is " + response.data.Ratings[0].Value);
+            console.log("IMDB Rating: " + response.data.Ratings[0].Value);
 
             // Rotten Tomatoes Rating of the movie.
-            console.log("Rotten Tomatoes Ratings is " + response.data.Ratings[1].Value);
+            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
 
             // Country where the movie was produced.
-            console.log(response.data.Country);
+            console.log("Country of Production: " + response.data.Country);
 
             // * Language of the movie.
-            console.log(response.data.Language);
+            console.log("Language(s): " + response.data.Language);
 
             // * Plot of the movie.
-            console.log(response.data.Plot);
+            console.log("Plot: " + response.data.Plot);
 
             // * Actors in the movie.
-            console.log(response.data.Actors);
+            console.log("Actors: " + response.data.Actors);
 
         })
         .catch(function (error) {
@@ -151,6 +143,7 @@ function movieThis() {
 // ------------------------------------------------------------- DO WHAT IT SAYS ---------------------------------------------------------------//
 
 function doWhatSay() {
+    
     // We will read the existing bank file
     fs.readFile("random.txt", "utf8", function (err, data) {
         if (err) {
