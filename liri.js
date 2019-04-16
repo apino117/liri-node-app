@@ -4,9 +4,6 @@ var operandum = process.argv[2];
 
 // ------------------------------------------------------------- CONCERT THIS ---------------------------------------------------------------//
 
-// Name of the venue
-// Venue location
-// Date of the Event (use moment to format this as "MM/DD/YYYY")
 
 // Establish Variables and Require
 var axios = require("axios");
@@ -16,11 +13,11 @@ var moment = require("moment")
 function concert() {
 
     // Scope variable in function so it doesnt fire other functions(?)
-    var artist = process.argv[3];
+    var searchTerm = process.argv[3];
 
     // AJAX CalL
     axios
-        .get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+        .get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp")
         .then(function (response) {
 
             // Venue Name
@@ -72,10 +69,10 @@ var spotify = new Spotify(keys.spotify);
 
 function spotifyThis() {
 
-    var songName = process.argv[3];
+    var searchTerm = process.argv[3];
 
     // Search Method
-    spotify.search({ type: 'track', query: songName, limit: 1 }, function (err, data) {
+    spotify.search({ type: 'track', query: searchTerm, limit: 1 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
@@ -92,7 +89,6 @@ function spotifyThis() {
         // Album Name
         console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
 
-
     });
 
 }
@@ -100,29 +96,19 @@ function spotifyThis() {
 // ------------------------------------------------------------- OMDB -----------------------------------------------------------------//
 
 
-// * Title of the movie.
-// * Year the movie came out.
-// * IMDB Rating of the movie.
-// * Rotten Tomatoes Rating of the movie.
-// * Country where the movie was produced.
-// * Language of the movie.
-// * Plot of the movie.
-// * Actors in the movie.
-
-
 function movieThis() {
 
     // Scoping the variable
 
     // If it's one word
-    var title = process.argv[3];
+    var searchTerm = process.argv[3];
 
-    // // If it's two words
-    // var title = process.argv[3] + "+" + process.argv[4];
+    // // If it's two words...not sure the exact best way to handle, some sort of user validation based off the number of spaces or the argvs?
+    // var searchTerm = process.argv[3] + "+" + process.argv[4];
 
     // AJAX CalL
     axios
-        .get("https://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy")
+        .get("https://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy")
         .then(function (response) {
 
             // Title
@@ -133,7 +119,7 @@ function movieThis() {
 
             // IMDB Rating of the movie.
             console.log("IMDB Ratings is " + response.data.Ratings[0].Value);
-            
+
             // Rotten Tomatoes Rating of the movie.
             console.log("Rotten Tomatoes Ratings is " + response.data.Ratings[1].Value);
 
@@ -170,8 +156,43 @@ function movieThis() {
 
 }
 
+// ------------------------------------------------------------- DO WHAT IT SAYS ---------------------------------------------------------------//
 
+var fs = require("fs");
 
+function doWhatSay() {
+    // We will read the existing bank file
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+
+        data = data.split("-");
+
+        // Operandum
+        operandum = data[0];
+
+        // Zooming in on data to do a second split
+        refinedData = data[2].split(",")
+
+        // Search Term
+        searchTerm = refinedData[1];
+
+        // Same switchboard but inside the function
+        switch (operandum) {
+            case "concert":
+                concert();
+                break;
+            case "spotify":
+                spotifyThis();
+                break;
+            case "omdb":
+                movieThis();
+                break;
+        }
+
+    });
+}
 
 
 
@@ -187,6 +208,9 @@ switch (operandum) {
         break;
     case "omdb":
         movieThis();
+        break;
+    case "dowhatsay":
+        doWhatSay();
         break;
 }
 
