@@ -58,17 +58,6 @@ function concert() {
 
 // ------------------------------------------------------------- SPOTIFY --------------------------------------------------------------------//
 
-// ----------- PSUEDO CODE ------------ //
-// 1) Set up a capture for what the user types in
-// 2) User types something in and it writes that to another file
-// 3) That file gets referenced for the API call 
-// 4) We need: 
-// *) Artist
-// *) Song name
-// *) Preview link of the song from Spotify
-// *) Album
-// 5) Once we have the API call working maybe setup a prompt to ask the user what they want to do for each field
-
 
 // Code to read and set any environment variables with the dotenv package:
 require("dotenv").config()
@@ -81,27 +70,33 @@ var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 
 
+function spotifyThis() {
 
-// // Search Method
-// spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function (err, data) {
-//     if (err) {
-//         return console.log('Error occurred: ' + err);
-//     }
+    var songName = process.argv[3];
 
-//     // Artist Name
-//     console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
+    // Search Method
+    spotify.search({ type: 'track', query: songName, limit: 1 }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
 
-//     // External Link
-//     console.log(JSON.stringify(data.tracks.items[0].album.external_urls.spotify, null, 2));
+        // Artist Name
+        console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
 
-//     // Song Name
-//     console.log(JSON.stringify(data.tracks.items[0].name, null, 2));
+        // // External Link
+        console.log(JSON.stringify(data.tracks.items[0].external_urls.spotify, null, 2));
 
-//     // Album Name
-//     console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
+        // Song Name
+        console.log(JSON.stringify(data.tracks.items[0].name, null, 2));
+
+        // Album Name
+        console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
 
 
-// });
+    });
+
+}
+
 
 
 // ------------------------------------------------------------- SWITCHBOARD -----------------------------------------------------------------//
@@ -110,6 +105,9 @@ var spotify = new Spotify(keys.spotify);
 switch (operandum) {
     case "concert":
         concert();
+        break;
+    case "spotify":
+        spotifyThis();
         break;
 }
 
