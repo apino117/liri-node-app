@@ -11,16 +11,28 @@ var operandum = process.argv[2];
 // Establish Variables and Require
 var axios = require("axios");
 
-var artist = process.argv[3];
+var moment = require("moment")
 
 function concert() {
+
+    // Scope variable in function so it doesnt fire other functions(?)
+    var artist = process.argv[3];
+
     // AJAX CalL
     axios
         .get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
         .then(function (response) {
-            // If the axios was successful...
+
+            // Venue Name
             console.log(response.data[0].venue.name);
+
+            // Venue City, Country
             console.log(response.data[0].venue.city + ", " + response.data[0].venue.country);
+
+            // Date of concert
+            var rawDate = response.data[0].datetime;
+            console.log(moment(rawDate).format("dddd, MMMM Do YYYY, h:mm:ss a"));
+
         })
         .catch(function (error) {
             if (error.response) {
@@ -70,26 +82,26 @@ var spotify = new Spotify(keys.spotify);
 
 
 
-// Search Method
-spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function (err, data) {
-    if (err) {
-        return console.log('Error occurred: ' + err);
-    }
+// // Search Method
+// spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function (err, data) {
+//     if (err) {
+//         return console.log('Error occurred: ' + err);
+//     }
 
-    // Artist Name
-    console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
+//     // Artist Name
+//     console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
 
-    // External Link
-    console.log(JSON.stringify(data.tracks.items[0].album.external_urls.spotify, null, 2));
+//     // External Link
+//     console.log(JSON.stringify(data.tracks.items[0].album.external_urls.spotify, null, 2));
 
-    // Song Name
-    console.log(JSON.stringify(data.tracks.items[0].name, null, 2));
+//     // Song Name
+//     console.log(JSON.stringify(data.tracks.items[0].name, null, 2));
 
-    // Album Name
-    console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
+//     // Album Name
+//     console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
 
 
-});
+// });
 
 
 // ------------------------------------------------------------- SWITCHBOARD -----------------------------------------------------------------//
