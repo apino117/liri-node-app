@@ -6,7 +6,7 @@ Welcome T.I.M.O.T.H.Y - or: "this is my oppurtunity to hear you" - my liri app!
 
 The goal of this app is to make AJAX calls to three seperate databases so users can search and pull data for their own purposes (no judgement).
 
-Nothing here is "R" inheritenly rated, but nor is there any filter and as we all know in searching content on the web sometimes results can come unexpectedly. Users are advised to excercise discretion when searching.
+Nothing here is "R" rated inherintly, but nor is there any filter and as we all know in searching content on the web sometimes results can come unexpectedly. Users are advised to excercise discretion when searching.
 
 To start you can tell "T.I.M.O.T.H.Y" to do one of four commands:
 
