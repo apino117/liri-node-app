@@ -21,7 +21,7 @@ var searchTerm = process.argv[3];
 // ------------------------------------------------------------- CONCERT THIS ---------------------------------------------------------------//
 
 function concert() {
-    
+
     // AJAX CalL
     axios
         .get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp")
@@ -143,7 +143,7 @@ function movieThis() {
 // ------------------------------------------------------------- DO WHAT IT SAYS ---------------------------------------------------------------//
 
 function doWhatSay() {
-    
+
     // We will read the existing bank file
     fs.readFile("random.txt", "utf8", function (err, data) {
         if (err) {
@@ -163,6 +163,18 @@ function doWhatSay() {
 
         console.log(operandum + searchTerm);
 
+        // Switchboard Within DoWhatSay
+        switch (operandum) {
+            case "concert":
+                concert();
+                break;
+            case "spotify":
+                spotifyThis();
+                break;
+            case "omdb":
+                movieThis();
+                break;
+        }
     });
 }
 
