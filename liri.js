@@ -3,10 +3,11 @@
 // 2) User types something in and it writes that to another file
 // 3) That file gets referenced for the API call 
 // 4) We need: 
-    // *) Artist
-    // *) Song name
-    // *) Preview link of the song from Spotify
-    // *) Album
+// *) Artist
+// *) Song name
+// *) Preview link of the song from Spotify
+// *) Album
+// 5) Once we have the API call working maybe setup a prompt to ask the user what they want to do for each field
 
 
 
@@ -20,25 +21,24 @@ var Spotify = require('node-spotify-api');
 
 var spotify = new Spotify(keys.spotify);
 
-// Search Method
-spotify
-    .search({ type: 'track', query: 'All the Small Things' })
-    .then(function (response) {
-        console.log(response);
-    })
-    .catch(function (err) {
-        console.log(err);
-    });
 
-// Request Method
-spotify
-    .request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx')
-    .then(function (data) {
-        console.log(data);
-    })
-    .catch(function (err) {
-        console.error('Error occurred: ' + err);
-    });
+
+// Search Method
+spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function (err, data) {
+    if (err) {
+        return console.log('Error occurred: ' + err);
+    }
+
+    // Artist Name
+    console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
+
+    // External Link
+    console.log(JSON.stringify(data.tracks.items[0].album.external_urls.spotify, null, 2));
+
+
+
+});
+
 
 
 
