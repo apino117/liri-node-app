@@ -1,14 +1,22 @@
-// ------------------------------------------------------------- UNIVERSALS -----------------------------------------------------------------//
+// --------------------------------------------------------- UNIVERSALS / REQUIRES -----------------------------------------------------------//
+
+require("dotenv").config();
+
+var fs = require("fs");
+
+var moment = require("moment");
+
+var axios = require("axios");
+
+var keys = require("./keys.js");
+
+var Spotify = require('node-spotify-api');
+
+var spotify = new Spotify(keys.spotify);
 
 var operandum = process.argv[2];
 
 // ------------------------------------------------------------- CONCERT THIS ---------------------------------------------------------------//
-
-
-// Establish Variables and Require
-var axios = require("axios");
-
-var moment = require("moment")
 
 function concert() {
 
@@ -50,22 +58,7 @@ function concert() {
         });
 }
 
-
-
-
 // ------------------------------------------------------------- SPOTIFY --------------------------------------------------------------------//
-
-
-// Code to read and set any environment variables with the dotenv package:
-require("dotenv").config()
-
-// Import the keys.js file and store it in a variable.
-var keys = require("./keys.js");
-
-var Spotify = require('node-spotify-api');
-
-var spotify = new Spotify(keys.spotify);
-
 
 function spotifyThis() {
 
@@ -77,24 +70,23 @@ function spotifyThis() {
             return console.log('Error occurred: ' + err);
         }
 
-        // Artist Name
-        console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
-
-        // // External Link
-        console.log(JSON.stringify(data.tracks.items[0].external_urls.spotify, null, 2));
-
         // Song Name
         console.log(JSON.stringify(data.tracks.items[0].name, null, 2));
 
+        // Artist Name
+        console.log(JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
+
         // Album Name
         console.log(JSON.stringify(data.tracks.items[0].album.name, null, 2));
+
+        // // External Link
+        console.log(JSON.stringify(data.tracks.items[0].external_urls.spotify, null, 2));
 
     });
 
 }
 
 // ------------------------------------------------------------- OMDB -----------------------------------------------------------------//
-
 
 function movieThis() {
 
@@ -158,8 +150,6 @@ function movieThis() {
 
 // ------------------------------------------------------------- DO WHAT IT SAYS ---------------------------------------------------------------//
 
-var fs = require("fs");
-
 function doWhatSay() {
     // We will read the existing bank file
     fs.readFile("random.txt", "utf8", function (err, data) {
@@ -178,26 +168,12 @@ function doWhatSay() {
         // Search Term
         searchTerm = refinedData[1];
 
-        // Same switchboard but inside the function
-        switch (operandum) {
-            case "concert":
-                concert();
-                break;
-            case "spotify":
-                spotifyThis();
-                break;
-            case "omdb":
-                movieThis();
-                break;
-        }
+        console.log(operandum + searchTerm);
 
     });
 }
 
-
-
 // ------------------------------------------------------------- SWITCHBOARD -----------------------------------------------------------------//
-
 
 switch (operandum) {
     case "concert":
