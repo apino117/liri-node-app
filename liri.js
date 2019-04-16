@@ -2,7 +2,7 @@
 
 var operandum = process.argv[2];
 
-// ------------------------------------------------------------- CONCERT THIS -----------------------------------------------------------------//
+// ------------------------------------------------------------- CONCERT THIS ---------------------------------------------------------------//
 
 // Name of the venue
 // Venue location
@@ -97,6 +97,82 @@ function spotifyThis() {
 
 }
 
+// ------------------------------------------------------------- OMDB -----------------------------------------------------------------//
+
+
+// * Title of the movie.
+// * Year the movie came out.
+// * IMDB Rating of the movie.
+// * Rotten Tomatoes Rating of the movie.
+// * Country where the movie was produced.
+// * Language of the movie.
+// * Plot of the movie.
+// * Actors in the movie.
+
+
+function movieThis() {
+
+    // Scoping the variable
+
+    // If it's one word
+    var title = process.argv[3];
+
+    // // If it's two words
+    // var title = process.argv[3] + "+" + process.argv[4];
+
+    // AJAX CalL
+    axios
+        .get("https://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy")
+        .then(function (response) {
+
+            // Title
+            console.log(response.data.Title);
+
+            // Year the movie came out
+            console.log(response.data.Released);
+
+            // IMDB Rating of the movie.
+            console.log("IMDB Ratings is " + response.data.Ratings[0].Value);
+            
+            // Rotten Tomatoes Rating of the movie.
+            console.log("Rotten Tomatoes Ratings is " + response.data.Ratings[1].Value);
+
+            // Country where the movie was produced.
+            console.log(response.data.Country);
+
+            // * Language of the movie.
+            console.log(response.data.Language);
+
+            // * Plot of the movie.
+            console.log(response.data.Plot);
+
+            // * Actors in the movie.
+            console.log(response.data.Actors);
+
+        })
+        .catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an object that comes back with details pertaining to the error that occurred.
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log("Error", error.message);
+            }
+            console.log(error.config);
+        });
+
+}
+
+
+
+
 
 
 // ------------------------------------------------------------- SWITCHBOARD -----------------------------------------------------------------//
@@ -108,6 +184,9 @@ switch (operandum) {
         break;
     case "spotify":
         spotifyThis();
+        break;
+    case "omdb":
+        movieThis();
         break;
 }
 
