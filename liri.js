@@ -16,7 +16,10 @@ var spotify = new Spotify(keys.spotify);
 
 var operandum = process.argv[2];
 
-var searchTerm = process.argv[3];
+var searchTerm = process.argv.slice(3).join(" ");
+
+var divider = "\n------------------------------------------------------------\n\n";
+
 
 // ------------------------------------------------------------- CONCERT THIS ---------------------------------------------------------------//
 
@@ -99,29 +102,39 @@ function movieThis() {
         .get("https://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy")
         .then(function (response) {
 
-            // Title
-            console.log("Title: " + response.data.Title);
+            var thingData = [
+                // Title
+                "Title: " + response.data.Title,
 
-            // Year the movie came out
-            console.log("Release Date: " + response.data.Released);
+                // Year the movie came out
+                "Release Date: " + response.data.Released,
 
-            // IMDB Rating of the movie.
-            console.log("IMDB Rating: " + response.data.Ratings[0].Value);
+                // IMDB Rating of the movie.
+                "IMDB Rating: " + response.data.Ratings[0].Value,
 
-            // Rotten Tomatoes Rating of the movie.
-            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+                // Rotten Tomatoes Rating of the movie.
+                "Rotten Tomatoes Rating: " + response.data.Ratings[1].Value,
 
-            // Country where the movie was produced.
-            console.log("Country of Production: " + response.data.Country);
+                // Country where the movie was produced.
+                "Country of Production: " + response.data.Country,
 
-            // * Language of the movie.
-            console.log("Language(s): " + response.data.Language);
+                // * Language of the movie.
+                "Language(s): " + response.data.Language,
 
-            // * Plot of the movie.
-            console.log("Plot: " + response.data.Plot);
+                // * Plot of the movie.
+                "Plot: " + response.data.Plot,
 
-            // * Actors in the movie.
-            console.log("Actors: " + response.data.Actors);
+                // * Actors in the movie.
+                "Actors: " + response.data.Actors,
+
+            ].join("\n\n");
+
+            // Append showData and the divider to log.txt, print showData to the console
+            fs.appendFile("log.txt", thingData + divider, function (err) {
+                if (err)
+                    throw err;
+                console.log(thingData);
+            });
 
         })
         .catch(function (error) {
@@ -167,7 +180,7 @@ function doWhatSay() {
 
         // Get the quotes off search term
         searchTerm = secondStageTerm.slice(1, -1);
-        
+
         console.log(operandum + searchTerm);
 
         // Switchboard Within DoWhatSay
