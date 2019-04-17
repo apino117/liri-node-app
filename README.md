@@ -22,7 +22,6 @@ If you need any assistance or have any questions hopefully there's a concert, so
 Here's a quick video demonstrating the functionality:
 ![How_to_Video](how-to-video.mov) 
 
-
 Happy searchings!
 
 ![Programmer_Gif](programmer.gif) 
