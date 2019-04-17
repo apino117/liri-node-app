@@ -19,6 +19,10 @@ To start you can tell "T.I.M.O.T.H.Y" to do one of four commands:
 
 If you need any assistance or have any questions hopefully there's a concert, song or movie that might be able to help you out.
 
+Here's a quick video demonstrating the functionality:
+![How_to_Video](how-to-video.mov) 
+
+
 Happy searchings!
 
 ![Programmer_Gif](programmer.gif) 
