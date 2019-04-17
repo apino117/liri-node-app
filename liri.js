@@ -32,17 +32,26 @@ function concert() {
         .get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp")
         .then(function (response) {
 
-            // console.log(response);
+            var thingData = [
+                // Venue Name
+                "Venue Name: " + response.data[0].venue.name,
 
-            // Venue Name
-            console.log("Venue Name: " + response.data[0].venue.name);
+                // Venue City, Country
+                "Location: " + response.data[0].venue.city + ", " + response.data[0].venue.country,
 
-            // Venue City, Country
-            console.log("Location: " + response.data[0].venue.city + ", " + response.data[0].venue.country);
+                // Date of concert
+                rawDate = response.data[0].datetime,
+                "Date: " + moment(rawDate).format("dddd, MMMM Do YYYY, h:mm:ss a"),
 
-            // Date of concert
-            var rawDate = response.data[0].datetime;
-            console.log("Date: " + moment(rawDate).format("dddd, MMMM Do YYYY, h:mm:ss a"));
+            ].join("\n\n");
+
+            // Append showData and the divider to log.txt, print showData to the console
+            fs.appendFile("log.txt", thingData + divider, function (err) {
+                if (err)
+                    throw err;
+                console.log(thingData);
+            });
+
 
         })
         .catch(function (error) {
@@ -74,17 +83,28 @@ function spotifyThis() {
             return console.log('Error occurred: ' + err);
         }
 
-        // Song Name
-        console.log("Song: " + JSON.stringify(data.tracks.items[0].name, null, 2));
+        var thingData = [
 
-        // Artist Name
-        console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
+            // Song Name
+            "Song: " + JSON.stringify(data.tracks.items[0].name, null, 2),
 
-        // Album Name
-        console.log("Album: " + JSON.stringify(data.tracks.items[0].album.name, null, 2));
+            // Artist Name
+            "Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2),
 
-        // // External Link
-        console.log("Link: " + JSON.stringify(data.tracks.items[0].external_urls.spotify, null, 2));
+            // Album Name
+            "Album: " + JSON.stringify(data.tracks.items[0].album.name, null, 2),
+
+            // // External Link
+            "Link: " + JSON.stringify(data.tracks.items[0].external_urls.spotify, null, 2),
+        ].join("\n\n");
+
+
+        // Append showData and the divider to log.txt, print showData to the console
+        fs.appendFile("log.txt", thingData + divider, function (err) {
+            if (err)
+                throw err;
+            console.log(thingData);
+        });
 
     });
 
